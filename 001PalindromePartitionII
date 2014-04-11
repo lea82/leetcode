@@ -1,0 +1,32 @@
+/*Given a string s, partition s such that every substring of the partition is a palindrome.
+
+Return the minimum cuts needed for a palindrome partitioning of s.
+
+For example, given s = "aab",
+Return 1 since the palindrome partitioning ["aa","b"] could be produced using 1 cut. 
+*/
+
+class Solution {
+public:
+    int minCut(string s) { //dp solution
+        int len=s.size();
+        if (len<2) return 0; //either null or one char doesn't need cut
+        int cuts[len]; 
+        bool palin[len][len]; //palin[i][j]to see if the substring from i to j is palindrome
+        
+        memset(palin,0,sizeof(palin)); //initialize to all 0s, all false
+        for (int i=0;i<=len;i++) cuts[i]=len-i; //every single char is a cut
+        
+        for (int i=len-1;i>=0;i--){
+            for (int j=i;j<len;j++){
+                if (s[i]==s[j]&& ((j-i<2)||palin[i+1][j-1])){
+                //same char, either same/adjacent position or the substring between i+1 and j-1 is palindrome
+                palin[i][j]=1;
+                cuts[i]=min(cuts[i],cuts[j+1]+1);
+                }
+            }
+        }
+        return cuts[0]-1;
+    
+    }
+};
