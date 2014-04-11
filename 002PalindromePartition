@@ -1,0 +1,37 @@
+/*Given a string s, partition s such that every substring of the partition is a palindrome.
+Return all possible palindrome partitioning of s.*/
+
+
+
+class Solution {
+public:
+    typedef vector<vector<string>> vvs; //vector of vector of strings
+    typedef vector<string> vs; //vector of strings
+    vvs partition(string s){
+        vvs ret;
+        vs part;
+        GenPart(s,0,part,ret);
+        return ret;
+    }
+    void GenPart(const string &s, const int &start,vs &part,vvs &ret){
+        if (start==s.size()){
+            ret.emplace_back(part);
+            return;
+        }
+        for (int i=start;i<s.size();i++){
+            if (isPalin(s,start,i)){
+                part.emplace_back(s.substr(start,i-start+1));
+                GenPart(s,i+1,part,ret);
+                part.pop_back();
+            }
+        }
+    }
+    bool isPalin(string s, int i, int j){
+        while(i<j){
+            if (s[i]!=s[j]) return false;
+            i++;
+            j--;
+        }
+           return true;
+    } 
+};
