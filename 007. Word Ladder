@@ -20,7 +20,7 @@ All words contain only lowercase alphabetic characters.
 
     int ladderLength(string start, string end, unordered_set<string> &dict) {
     	queue<pair<string, int> > queWords;
-		queWords.push({start, 1});
+		queWords.push({start, 1});  //pair<string, int>(start, 1)
 		while(!queWords.empty()) {
 			pair<string, int> word = queWords.front();
             queWords.pop();
