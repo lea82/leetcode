@@ -1,0 +1,24 @@
+/* Reverse digits of an integer.
+
+Example1: x = 123, return 321
+Example2: x = -123, return -321
+*/
+
+
+class Solution {
+public:
+    int reverse(int x) {
+    if (x == INT_MIN) return 0;
+    int res = 0;
+    int y = abs(x);
+    int digit = 0;
+    while (y) {
+      digit = y % 10;
+      y /= 10;
+      if (res > (INT_MAX - y%10)/10) return 0;
+      res = res*10 + digit;
+    }
+    
+    return x>0?res:-res;
+  }
+};
