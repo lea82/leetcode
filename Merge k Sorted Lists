@@ -1,0 +1,109 @@
+/*
+Definition of dummy node : a dummy node at the front/end of the list that is there only to reduce the need for special-case code in the linked-list operations. It is an empty template to build new nodes later.
+Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+
+Hide Tags Divide and Conquer Linked List Heap
+std::priority_queue
+template <class T, class Container = vector<T>,
+  class Compare = less<typename Container::value_type> > class priority_queue;
+*///The elements are compared using operator compare//
+    //The element with the highest value is an element for which this would return false when compared to every other element in the range.
+
+//The standard container adaptor priority_queue calls make_heap, push_heap and pop_heap automatically to maintain heap properties for a container.
+
+1) method 1
+class Solution {
+    struct compare {
+        bool operator()(const ListNode* l, const ListNode* r) {
+            return l->val > r->val; // 
+            //The element with the highest value is an element for which this would return false when compared to every other element
+        }
+
+        };
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        std::priority_queue<ListNode*,vector<ListNode*>,compare> heap;
+        ListNode dummy(0);
+        ListNode* cur = &dummy;
+        for (int i=0;i<lists.size();i++) {
+            if (lists[i]) heap.push(lists[i]);//push all first elements of the lists
+        }
+        while (!heap.empty()) {
+            cur->next = heap.top();
+            heap.pop();
+            cur = cur->next;
+            if (cur->next) heap.push(cur->next);//push the next node in original list 
+        }
+        return dummy.next;
+    }
+};
+    2) HEAP method
+    class Solution {
+
+public:
+
+    ListNode *mergeKLists(vector<ListNode *> &lists) {
+
+        // Begin and end of our range of elements:
+        auto it_begin = begin(lists);
+        auto it_end = end(lists);
+
+        // Removes empty lists:
+        it_end = remove_if(it_begin, it_end, isNull);
+        if (it_begin == it_end) return nullptr; // All lists where empty.
+
+        // Head and tail of the merged list:
+        ListNode *head = nullptr;
+        ListNode *tail = nullptr;
+
+        // Builds a min-heap over the list of lists:
+        make_heap(it_begin, it_end, minHeapPred);
+
+        // The first element in the heap is the head of our merged list:
+        head = tail = *it_begin;
+
+        while (distance(it_begin, it_end) > 1) {
+
+            // Moves the heap's front list to its back:
+            pop_heap(it_begin, it_end, minHeapPred);
+
+            // And removes one node from it:
+            --it_end;
+            *it_end = (*it_end)->next;
+
+            // If it is not empty it inserts it back into the heap:
+            if (*it_end) {
+
+                ++it_end;
+                push_heap(it_begin, it_end, minHeapPred);
+            }
+
+            // After  the push we have our next node in front of the heap:
+            tail->next = *it_begin;
+            tail = tail->next;
+        }
+
+        return head;
+    }
+
+private:
+
+    // Predicate to remove all null nodes from a vector:
+    static bool isNull(const ListNode* a) {
+
+        return a == nullptr;
+    }
+
+    // Predicate to generate a min heap of list node pointers:
+    static bool minHeapPred(const ListNode* a,
+                            const ListNode* b) {
+
+        assert(a);
+        assert(b);
+
+        return a->val > b->val;
+    }
+
+};
+    return head.next;
+}
