@@ -9,7 +9,6 @@ public:
     TreeNode *buildTree(vector<int> &num, int start, int end)
     {
         if (start>end) return NULL;
-        if (start==end) return new TreeNode(num[start]);
         int mid=start+(end-start)/2;
         TreeNode *node=new TreeNode(num[mid]);
         node->left=buildTree(num, start, mid-1);
