@@ -18,3 +18,24 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
+class Solution {
+public:
+    int maxPathSum(TreeNode* root) {
+        int max_sum = INT_MIN;
+        dfs(root, max_sum);
+        return max_sum;
+    }
+private:
+ //   int max_sum;
+    int dfs(TreeNode *root, int &max_sum) {
+        if (!root) return 0;
+        int l = dfs(root->left, max_sum);
+        int r = dfs(root->right,max_sum);
+        if (l<0) l=0;
+        if (r<0) r=0;
+        int sum = root->val;
+        max_sum = max(l+r+sum, max_sum);
+        return root->val += max(r,l);
+    }
+};
