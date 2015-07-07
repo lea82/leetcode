@@ -19,3 +19,52 @@ public:
         return 1+min(minDepth(root->left),minDepth(root->right));
     }
 };
+2)BFS:  a easier level order using the size of queue to determine the depth
+
+        queue<pair<TreeNode *,int>> nodes;            
+            int depth = 0;
+            if(root == NULL){
+                return 0;
+            }
+            nodes.push(pair<TreeNode*,int>(root,1));
+            while(!nodes.empty()){
+                pair<TreeNode*,int> next = nodes.front();
+                nodes.pop();
+                if(next.first->left==NULL && next.first->right==NULL){
+                    depth = next.second;
+                    break;
+                }
+                if(next.first->left!=NULL){
+                    nodes.push(pair<TreeNode*,int>(next.first->left, next.second+1));
+                }
+                if(next.first->right!=NULL){
+                    nodes.push(pair<TreeNode*,int>(next.first->right, next.second+1));
+                }
+            }
+            return depth;
+        }
+
+3) stack
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+
+        if (!root) return 0;
+        int result = INT_MAX;
+        stack<pair<TreeNode*,int>> s;
+        s.push(make_pair(root,1));
+        while (!s.empty()) {
+            auto node = s.top().first;
+            auto depth = s.top().second;
+            s.pop();
+            if (!node->left && !node->right) result = min(result,depth);
+            if (node->left && depth < result) s.push(make_pair(node->left,depth+1));
+            if (node->right && depth < result) s.push(make_pair(node->right,depth+1));
+        }
+        return result;
+    }
