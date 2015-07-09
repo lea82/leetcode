@@ -7,3 +7,21 @@ for line in lines:
         chosen_line = line
     i += 1
 return chosen_line
+
+//+
++//https://en.wikipedia.org/wiki/Reservoir_sampling
++array R[k];    // result
++integer i, j;
++
++// fill the reservoir array
++for each i in 1 to k do
++    R[i] := S[i]
++done;
++
++// replace elements with gradually decreasing probability
++for each i in k+1 to length(S) do
++    j := random(1, i);   // important: inclusive range
++    if j <= k then
++        R[j] := S[i]
++    fi
++done
