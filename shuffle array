@@ -1,0 +1,7 @@
+//random_int: 1/i-1 * i-1/n = 1/n
+//https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+void random_permutation(int a[], int n) {
+    int i;
+    for (i=n; i>1; i--)
+        swap(&a[i-1],&a[random_int(0,i-1)]);
+}
