@@ -23,3 +23,43 @@ public:
         return true;
     }
 };
+
+2) bool isValid(string s) {
+        stack <char> stk;
+        char temp = 0;
+        unordered_map <char, char> bran_dict;
+        bran_dict[')'] = '(';
+        bran_dict[']'] = '[';
+        bran_dict['}'] = '{';
+        for (int i=0; i<s.size(); i++) {
+            temp = s[i];
+            if (temp == ')' || temp == '}' || temp == ']') {
+                if (stk.empty() || stk.top() != bran_dict[temp])
+                    return false;
+                else {
+                    stk.pop();
+                }
+            }
+            else
+                stk.push(temp);
+        }
+        if (stk.empty())
+            return true;
+        else
+            return false;
+    }
+    
+    3)  bool isValid(string s) {
+        string left = "([{";
+        string right = ")]}";
+        stack<char> stk;
+        for (int i=0;i<s.size();i++){
+            if (left.find(s[i])!=left.npos){
+                stk.push(s[i]);
+            }else {
+                if (stk.empty()||left[right.find(s[i])]!=stk.top()) return false;
+                else stk.pop();
+            }
+        }
+        return stk.empty();
+    }
