@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool isValid(string s) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if (s.size()==0) return true;
+        vector <char> stack1;
+        stack1.push_back(s[0]);
+        for (int i=1; i<s.size(); i++)
+        {
+            if (s[i]=='(' || s[i]=='[' || s[i]=='{')
+            {
+                stack1.push_back(s[i]);
+                continue;
+            }
+            char current=stack1.back();
+            if (s[i]==')' && current!='(') return false;
+            if (s[i]==']' && current!='[') return false;
+            if (s[i]=='}' && current!='{' ) return false;
+            stack1.pop_back();
+        }
+        if (stack1.size()!=0) return false;
+        return true;
+    }
+};
