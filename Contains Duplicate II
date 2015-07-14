@@ -20,3 +20,24 @@ public:
         return false;
     }
 };
+
+2) 
+/*
+straightforward. 
+We maintain a mapping mp from a value in nums to its position (index) i. 
+Each time we meet an unseen value, we add it to the map (mp[nums[i]] = i). 
+Otherwise, depending on whether the recorded index mp[nums[i]] and the current index i satisfy i - mp[nums[i]] <= k 
+(node that the new index i is larger than the old index mp[nums[i]]), 
+we return true or update the index (mp[nums[i]] = i). 
+If all the elements have been visited and we have not returned true, we will return false.
+*/
+
+  bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        int n = nums.size();
+        unordered_map<int,int> mp;
+        for (int i = 0; i<n; i++){
+            if (mp.find(nums[i])!=mp.end() && (i - mp[nums[i]]<=k)) return true;
+            mp[nums[i]]=i;
+        }
+        return false;
+    }
