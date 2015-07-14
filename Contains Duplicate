@@ -20,3 +20,45 @@ public:
        return nums.size()>set<int>(nums.begin(),nums.end()).size();
     }
 };
+/*
+std::set
+template < class T,                        // set::key_type/value_type
+           class Compare = less<T>,        // set::key_compare/value_compare
+           class Alloc = allocator<T>      // set::allocator_type
+           > class set;
+Set
+Sets are containers that store unique elements following a specific order.
+
+In a set, the value of an element also identifies it (the value is itself the key, of type T), and each value must be unique. The value of the elements in a set cannot be modified once in the container (the elements are always const), but they can be inserted or removed from the container.
+
+Internally, the elements in a set are always sorted following a specific strict weak ordering criterion indicated by its internal comparison object (of type Compare).
+
+set containers are generally slower than unordered_set containers to access individual elements by their key, but they allow the direct iteration on subsets based on their order.
+
+Sets are typically implemented as binary search trees.
+
+Container properties
+Associative
+Elements in associative containers are referenced by their key and not by their absolute position in the container.
+Ordered
+The elements in the container follow a strict order at all times. All inserted elements are given a position in this order.
+Set
+The value of an element is also the key used to identify it.
+Unique keys
+No two elements in the container can have equivalent keys.
+Allocator-aware
+The container uses an allocator object to dynamically handle its storage needs.
+
+Template parameters
+T
+Type of the elements. Each element in a set container is also uniquely identified by this value (each value is itself also the element's key).
+Aliased as member types set::key_type and set::value_type.
+Compare
+A binary predicate that takes two arguments of the same type as the elements and returns a bool. The expression comp(a,b), where comp is an object of this type and a and b are key values, shall return true if a is considered to go before b in the strict weak ordering the function defines.
+The set object uses this expression to determine both the order the elements follow in the container and whether two element keys are equivalent (by comparing them reflexively: they are equivalent if !comp(a,b) && !comp(b,a)). No two elements in a set container can be equivalent.
+This can be a function pointer or a function object (see constructor for an example). This defaults to less<T>, which returns the same as applying the less-than operator (a<b).
+Aliased as member types set::key_compare and set::value_compare.
+Alloc
+Type of the allocator object used to define the storage allocation model. By default, the allocator class template is used, which defines the simplest memory allocation model and is value-independent.
+Aliased as member type set::allocator_type.
+*/
