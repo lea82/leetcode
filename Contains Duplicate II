@@ -1,0 +1,22 @@
+/*
+Given an array of integers and an integer k, find out whether there there are two distinct indices i and j in the array such that nums[i] = nums[j] and the difference between i and j is at most k.
+*/
+/*
+The basic idea is to maintain a set s which contain unique values from nums[i - k] to nums[i - 1], 
+if nums[i] is in set s then return true else update the set.
+*/
+class Solution {
+public:
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        int n = nums.size();
+        unordered_set<int> s;
+        if (k<=0) return false;
+        if (k>=n) k=n-1;
+        for (int i=0;i<n;i++){
+           if (i>k) s.erase(nums[i-k-1]); //maintain a set from i-1 to i-k
+           if (s.find(nums[i])!=s.end()) return true;
+           s.insert(nums[i]);
+        }
+        return false;
+    }
+};
