@@ -1,0 +1,41 @@
+/*
+Description:
+
+Count the number of prime numbers less than a non-negative number, n.
+
+Credits:
+Special thanks to @mithmatt for adding this problem and creating all test cases.
+
+Hint:
+
+Let's start with a isPrime function. To determine if a number is prime, we need to check if it is not divisible by any number less than n. The runtime complexity of isPrime function would be O(n) and hence counting the total prime numbers up to n would be O(n2). Could we do better?
+*/
+int countPrimes(int n) {
+       if (n<=2) return 0;
+        int sum = 1; 
+        int upper = sqrt(n); 
+        vector<bool> passed(n,false);
+        for (int i=3;i<n; i+=2){
+            if (!passed[i]) {
+                sum++;
+                if (i>upper) continue;
+                for (int j= i*i;j<n;j+=i){
+                    passed[j]=true;
+                }
+            }
+        }
+        return sum;
+2) 2 rounds:
+int countPrimes(int n) {
+        if (n <= 2) return 0;
+        double upper = sqrt(n);
+        bool *bv = new bool[n];
+        for(int i = 3; i <= upper; i += 2)
+            if (!bv[i]) 
+                for(int j = i*i, k = i << 1; j < n; j += k)
+                    bv[j] = 1;
+        int num = 1;
+        for(int i = 3; i < n; i += 2)
+            if(!bv[i]) num++;
+        return num;
+  }
