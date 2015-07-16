@@ -1,0 +1,37 @@
+/*
+Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.
+
+If the fractional part is repeating, enclose the repeating part in parentheses.
+
+For example,
+
+Given numerator = 1, denominator = 2, return "0.5".
+Given numerator = 2, denominator = 1, return "2".
+Given numerator = 2, denominator = 3, return "0.(6)".
+*/
+
+class Solution {
+public:
+    string fractionToDecimal(int64_t n, int64_t d) {
+        if (n==0) return "0";
+        string res;
+        if (n <0 ^ d <0) res +='-';
+        n=abs(n), d=abs(d); //consider the positive int from now
+        res += std::to_string(n/d); //integral part
+        if (n%d==0) return res;
+        res +='.';
+        unordered_map<int,int> m; //store the mapping from digit value to the location of the digit in the string result res
+        for (int64_t r = n%d;  r; r %=d){ //simulate the divide in the fraction
+            if (m.count(r)>0){//this remainder found in the map already, it's repeating
+                res.insert(m[r],1,'('); //insert 1 copy of ( at position of the repeating position
+                res += ')';
+                break;
+            }
+            //first time seen
+            m[r]=res.size();
+            r *=10;
+            res += std::to_string(r/d);
+        }
+        return res;
+    }
+};
