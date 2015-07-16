@@ -1,0 +1,33 @@
+1) 
+Make an extra copy and then rotate.
+
+Time complexity: O(n). Space complexity: O(n).
+
+
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        int n = nums.size();
+        vector<int> numcopy(n);
+        for (int i=0; i<n; i++){ //make a copy
+            numcopy[i] = nums[i];
+        }
+        for (int i=0; i<n; i++){
+            nums[(i+k)%n] = numcopy[i];
+        }
+    }
+};
+
+2) Reverse the first n - k elements, the last k elements, and then all the n elements.
+
+Time complexity: O(n). Space complexity: O(1).
+ void rotate(vector<int>& nums, int k) {
+ int n = nums.size();
+        k %= n;
+        //reverse the first n-k
+        reverse(nums.begin(),nums.begin()+n-k);
+        //reverse the last k elements
+        reverse(nums.begin()+n-k, nums.begin()+n);
+        //reverse the now n elements
+        reverse(nums.begin(),nums.begin()+n);
+    }
