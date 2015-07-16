@@ -1,0 +1,18 @@
+ Given an integer n, return the number of trailing zeroes in n!.
+
+Note: Your solution should be in logarithmic time complexity.
+ 
+ //all trailing 0 is from factors 5 * 2.
+
+       //sometimes one number may have several 5 factors, for example, 25 have two 5 factors, 125 have three 5 factors. 
+       //In the n! operation, factors 2 is always ample. So we just count how many 5 factors in all number from 1 to n.
+       /*ecause for every "5" there are at least two "2" factors to match it. For example, we count from 5k+1 to 5(k+1), the [5k+1, 5k+2] has at least one "2", [5k+3, 5k+4] has at least one "2".
+
+Even if there exist pow(5, k), there must have a number pow(4, k) less than it which can provide enough "2" */
+        
+class Solution {
+public:
+    int trailingZeroes(int n) {
+       return (n==0) ? 0 : (n/5) + trailingZeroes(n/5);
+    }
+};
