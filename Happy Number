@@ -32,3 +32,42 @@ public:
         else return false;
     }
 };
+
+2)
+    /*
+    The common choice is to use map or set to check if there is a loop. since the maximum sum is no greater than 2x2 + 9x9x9 (2,999,999,999), we can use a 1000 lengh hashtable . It's not O(1) space but it's faster than the fast-slow pointer solution.
+    */
+    int tran(int n){
+        int ans = 0;
+        while(n){
+            ans += pow(n%10, 2);
+            n/=10;
+        }
+        return ans;
+    }
+    public:
+    bool isHappy(int n) {
+        bool rep[1000];
+        memset(rep, 0, sizeof(rep));
+        n = tran(n);
+        while(!rep[n]){
+            rep[n] = true;
+            if(n == 1)
+                return true;   
+            n = tran(n);
+        }
+        return false;
+    }
+};
+
+3)
+ //Using fact all numbers in [2, 6] are not happy (and all not happy numbers end on a cycle that hits this interval):
+
+bool isHappy(int n) {
+    while(n>6){
+        int next = 0;
+        while(n){next+=(n%10)*(n%10); n/=10;}
+        n = next;
+    }
+    return n==1;
+}
