@@ -1,0 +1,36 @@
+/*
+Given a positive integer, return its corresponding column title as appear in an Excel sheet.
+
+For example:
+
+    1 -> A
+    2 -> B
+    3 -> C
+    ...
+    26 -> Z
+    27 -> AA
+    28 -> AB 
+    */
+ 
+ string convertToTitle(int n) {
+        char tmp;
+        string res;
+        while (n){
+            tmp = 'A' + (n-1)%26;
+            res = tmp + res; //concatenate at the start of res
+            //or we could append to the end of res and reverse before returning
+            n =(n-1) / 26;
+        }
+        return res;
+    }
+    
+    
+     string convertToTitle(int n) {
+        string result;
+        while (n) {
+            result.push_back('A' + (n - 1) % 26), n = (n - 1) / 26;    
+        }
+        reverse(result.begin(), result.end());
+        return result;
+        
+    }
