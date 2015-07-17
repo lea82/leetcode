@@ -1,0 +1,76 @@
+ /*
+ Given an array of size n, find the majority element. The majority element is the element that appears more than ⌊ n/2 ⌋ times.
+
+You may assume that the array is non-empty and the majority element always exist in the array.
+
+        This can be solved by Moore's voting algorithm. 
+        Basic idea of the algorithm is if we cancel out each occurrence of an element e with all the other elements 
+        that are different from e then e will exist till end if it is a majority element. 
+        Below code loops through each element and maintains a count of the element that has the potential of 
+        being the majority element. If next element is same then increments the count, otherwise decrements the count. 
+        If the count reaches 0 then update the potential index to the current element and sets count to 1.
+        */
+        
+        
+        //Every number in the vector votes for itself, the majority number gets the most votes. 
+        //Different number offsets the votes.
+        
+  int majorityElement(vector<int>& num) { 
+          int index = 0;
+        int count = 1;
+        for (int i = 1; i<num.size(); i++){
+             (num[i] == num[index])? count++ : count--;
+             if (count == 0) {
+                 index = i;
+                 count = 1;
+             }
+        }
+        return num[index];
+    }
+    
+    int majorityElement(vector<int>& num) {
+       int count = 1; 
+        int major = num[0];
+         for(int i=1; i<num.size();i++){
+            if(count==0){
+                count++;
+                major=num[i];
+            }else if(major==num[i]){
+                count++;
+            }else count--;
+
+        }
+        return major;
+  }
+  
+  3) Definitely not the fastest solution but I post it here for your reference since it's different from the rest I saw. 
+  The problem reminded me of the approach I followed at Single Number II (problem 137).
+
+We can iterate over the bits of all numbers and for every position find out if ones outnumber the zeros (among all numbers). 
+If this is the case, the corresponding bit of the ret variable (which holds the result) is set. 
+We essentially "construct" the number we look for.
+
+The following code is simple and should be easy to understand.
+
+  public int majorityElement(int[] num) {
+
+    int ret = 0;
+
+    for (int i = 0; i < 32; i++) {
+
+        int ones = 0, zeros = 0;
+
+        for (int j = 0; j < num.length; j++) {
+            if ((num[j] & (1 << i)) != 0) {
+                ++ones;
+            }
+            else
+                ++zeros;
+        }
+
+        if (ones > zeros)
+            ret |= (1 << i);
+    }
+
+    return ret;
+}
