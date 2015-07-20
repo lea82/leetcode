@@ -1,0 +1,53 @@
+/**
+
+Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+
+For example:
+Given binary tree {3,9,20,#,#,15,7},
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its level order traversal as:
+[
+  [3],
+  [9,20],
+  [15,7]
+]
+confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on OJ.
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> result;
+        if (!root) return result;
+        vector<int> cur_level;
+        queue<TreeNode*> q;
+        q.push(root);
+        q.push(NULL);
+        while (!q.empty()){
+            TreeNode* tmp = q.front();
+            q.pop();
+            if (tmp == NULL){//at the end of this level
+                result.push_back(cur_level);
+                cur_level.clear();
+                if (q.size()>0){
+                    q.push(NULL); //current processed level at end, then add NULL to the queue, meaning level's children level at end too
+                }
+            } else {
+                cur_level.push_back(tmp->val);
+                if (tmp->left) q.push(tmp->left);
+                if (tmp->right) q.push(tmp->right);
+            }
+        }
+        return result;
+    }
+};
