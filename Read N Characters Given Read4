@@ -1,0 +1,47 @@
+The API: int read4(char *buf) reads 4 characters at a time from a file.
+The return value is the actual number of characters read. 
+For example, it returns 3 if there is only 3 characters left in the file.
+By using the read4 API, implement the function int read(char *buf, int n) that reads n characters from the file.
+
+Note:
+The read function will only be called once for each test case.
+每次只能读如4个字符，但是n不一定是4的整数倍。
+直接一个while循环，然后在里面判断读出来的buff长度是不是小于4。
+另外，文件的字符数可能少于n。
+int read(char *buf, int n) {
+
+    int i = n;
+    while (i > 0) {
+
+        int i4 = read4(buf);
+        i = max(0, i - i4);
+
+        if (i4 < 4)
+            return n - i;
+
+        buf = buf + 4;
+    }
+
+    return n;
+}
+2)
+
+class Solution {
+public:
+    int read(char *buf, int n) {
+        if(buf == NULL) return 0;
+
+        int t = 0;        
+        for(int i = 0; i<=n/4; i++)
+            t += read4(buf + i*4);
+
+        if(n>t)
+        {
+            buf[t] = NULL;
+            return t;
+        }
+
+        return n;
+    }
+};
+
