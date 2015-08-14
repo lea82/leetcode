@@ -1,0 +1,28 @@
+There are a row of houses, each house can be painted with three colors red, 
+blue and green. The cost of painting each house with a certain color is different. 
+You have to paint all the houses such that no two adjacent houses have the same color.
+You have to paint the houses with minimum cost. How would you do it?
+Note: Painting house-1 with red costs different from painting house-2 with red. 
+The costs are different for each house and each color.
+
+An interesting DP problem. This link posts a nice solution which gives costs[i][j] a new meaning and modify it directly and so save the usage of additional spaces.
+
+Well, personally I would like to keep costs unmodified. I rewrite the code in C++, a little verbose than the one in the above link:-)
+
+
+ 1 class Solution {
+ 2 public:
+ 3     int minCost(vector<vector<int>>& costs) {
+ 4         if (costs.empty()) return 0;
+ 5         int n = costs.size(), r = 0, g = 0, b = 0;
+ 6         for (int i = 0; i < n; i++) {
+ 7             int rr = r, bb = b, gg = g; 
+ 8             r = costs[i][0] + min(bb, gg);
+ 9             b = costs[i][1] + min(rr, gg);
+10             g = costs[i][2] + min(rr, bb);
+11         }
+12         return min(r, min(b, g));
+13     } 
+14 };
+https://leetcode.com/discuss/51721/simple-java-dp-solution?show=51755#a51755
+r/b/g in the i-th loop means the minimum costs to paint the i-th house in red/blue/green respectively plus painting the previous houses. The time and space complexities are still ofO(n) and O(1).
