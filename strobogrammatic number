@@ -1,0 +1,21 @@
+/*
+A strobogrammatic number is a number that, given a base and given a set of glyphs, 
+appears the same whether viewed normally or upside down by rotation of 180 degrees.
+
+In base 10, a legible set of glyphs can be developed where 0, 1 and 8 are symmetrical around the horizontal axis, 
+and 6 and 9 are the same as each other when rotated 180 degrees (such as the digit characters in ASCII using the font Stylus BT). In such a system, the first few strobogrammatic numbers are:
+
+0, 1, 8, 11, 69, 88, 96, 101, 111, 181, 609, 619, 689, 808, 818, 888, 906, 916, 986, 1001 (sequence A000787 in OEIS)
+*/
+//The following is the C++ implementation of the suggested solution using a look-up table (implemented as an unordered_map). 
+class Solution {
+public:
+    bool isStrobogrammatic(string num) {
+        unordered_map<char, char> table{{'0', '0'}, {'1', '1'}, {'6', '9'}, {'8', '8'}, {'9', '6'}};
+        int n = num.length();
+        for (int l = 0, r = n - 1; l <= r; l++, r--)
+            if (table.find(num[l]) == table.end() || table.find(num[r]) == table.end() || table[num[l]] != num[r])
+                return false; 
+        return true;
+    }
+};
