@@ -52,3 +52,30 @@ Since we need to copy the vec2d anyway, we can just copy it into a simple vector
 27  * Vector2D i(vec2d);
 28  * while (i.hasNext()) cout << i.next();
 29  */
+Of course, since elements in vector are stored in a contiguous range of memory, the problem can be solved in O(1) memory (see here for a better solution). 
+
+2) **** this is better!!!
+Since the OJ does while (i.hasNext()) cout << i.next();, i.e., always calls hasNext before next, 
+I don't really have to call it myself so I could save that line in next. 
+But I think that would be bad, we shouldn't rely on that.
+
+class Vector2D {
+    vector<vector<int>>::iterator i, iEnd;
+    int j = 0;
+public:
+    Vector2D(vector<vector<int>>& vec2d) {
+        i = vec2d.begin();
+        iEnd = vec2d.end();
+    }
+
+    int next() {
+        hasNext(); //could be saved. but better not rely on OJ, while (i.hasNext()) cout << i.next();
+        return (*i)[j++];
+    }
+
+    bool hasNext() {
+        while (i != iEnd && j == (*i).size())
+            i++, j = 0;
+        return i != iEnd;
+    }
+};
